@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathMaster - Algebra Student Practice</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- KaTeX CSS & JS for Fast & Reliable LaTeX Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.25rem 0;
+            margin: 0.5rem 0;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header Navigation -->
+    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- App Logo -->
+            <div class="flex items-center space-x-3">
+                <div class="bg-brand-600 text-white p-2 rounded-lg font-bold text-xl flex items-center justify-center w-10 h-10 shadow-md">
+                    &Sigma;
+                </div>
+                <div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-brand-600 to-indigo-600 bg-clip-text text-transparent">MathMaster</span>
+                    <span class="text-xs text-gray-500 dark:text-gray-400 block -mt-1 font-medium">Algebra Student Practice</span>
+                </div>
+            </div>
+
+            <!-- Actions & Theme Toggle -->
+            <div class="flex items-center space-x-3">
+                <button onclick="generateClassroomTurnInCode()" class="flex items-center gap-2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs transition-all shadow-sm">
+                    <i class="fa-solid fa-graduation-cap"></i> Turn In for Classroom
+                </button>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none" title="Toggle Light/Dark Theme">
+                    <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col">
+        
+        <div id="student-view" class="grid grid-cols-1 lg:grid-cols-4 gap-6 flex-1">
+            <!-- Sidebar Navigation & Stats -->
+            <div class="lg:col-span-1 flex flex-col space-y-6">
+                <!-- Mastery Score Card -->
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
+                    <h3 class="text-xs uppercase font-bold text-gray-400 tracking-wider mb-3">Algebra Mastery</h3>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-3xl font-extrabold text-gray-900 dark:text-white" id="score-display">0 / 0</span>
+                        <span class="text-sm font-semibold px-2.5 py-1 bg-brand-50 dark:bg-brand-700/30 text-brand-600 dark:text-brand-400 rounded-full" id="accuracy-display">0%</span>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden mb-4">
+                        <div id="progress-bar-fill" class="bg-brand-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+
+                    <!-- Direct Google Classroom Turn-In Button -->
+                    <button onclick="generateClassroomTurnInCode()" class="w-full py-2.5 px-3 mb-3 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-graduation-cap"></i> Copy Grade Token
+                    </button>
+
+                    <div class="grid grid-cols-2 gap-2 text-center text-xs text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700/50 pt-3">
+                        <div>
+                            <span class="block font-bold text-gray-800 dark:text-gray-200 text-sm" id="stat-solved">0</span> Solved
+                        </div>
+                        <div>
+                            <span class="block font-bold text-gray-800 dark:text-gray-200 text-sm" id="stat-failed">0</span> Exhausted
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem List Navigation -->
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex-1 flex flex-col min-h-[300px]">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-sm font-bold text-gray-700 dark:text-gray-300">Algebra Problems</h3>
+                        <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-md font-mono" id="problem-count-badge">0 items</span>
+                    </div>
+                    <div id="problem-list" class="space-y-2 overflow-y-auto flex-1 pr-1 max-h-[450px]">
+                        <!-- Dynamically populated problem items -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problem Solving Workspace -->
+            <div class="lg:col-span-3 flex flex-col space-y-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <!-- Header & Meta info -->
+                        <div class="flex flex-wrap justify-between items-center pb-4 border-b border-gray-100 dark:border-gray-700 gap-2 mb-6">
+                            <div class="flex items-center space-x-2">
+                                <span id="current-problem-num" class="bg-brand-600 text-white font-extrabold text-sm px-3 py-1 rounded-lg">Problem 1</span>
+                                <span id="current-problem-topic" class="text-xs font-semibold px-2.5 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-md">Algebra</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <span class="text-gray-500 dark:text-gray-400">Attempts left:</span>
+                                <div id="attempt-dots" class="flex space-x-1">
+                                    <span class="w-3 h-3 rounded-full bg-brand-600 inline-block"></span>
+                                    <span class="w-3 h-3 rounded-full bg-brand-600 inline-block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Problem Statement -->
+                        <div class="mb-8">
+                            <h4 class="text-xs uppercase font-bold text-gray-400 tracking-wider mb-2">Problem Statement</h4>
+                            <div id="problem-statement" class="text-lg sm:text-xl text-gray-800 dark:text-gray-100 leading-relaxed font-serif min-h-[60px] bg-gray-50/50 dark:bg-gray-900/30 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                                <!-- Rendered math will go here -->
+                            </div>
+                        </div>
+
+                        <!-- Hint Box (shown on attempt 1 failure) -->
+                        <div id="hint-box" class="hidden mb-6 p-4 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-xl text-amber-800 dark:text-amber-300 text-sm flex items-start space-x-3">
+                            <i class="fa-solid fa-lightbulb text-amber-500 text-lg mt-0.5"></i>
+                            <div>
+                                <strong class="font-semibold block mb-1">Attempt 1 Incorrect!</strong>
+                                <span id="hint-text">Check your calculations or sign carefully. You have 1 final attempt remaining.</span>
+                            </div>
+                        </div>
+
+                        <!-- Input Answer Form -->
+                        <div id="answer-form-container" class="mb-6 bg-gray-50 dark:bg-gray-900/50 p-5 rounded-xl border border-gray-200 dark:border-gray-700">
+                            <label for="student-answer" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Your Answer:</label>
+                            <form onsubmit="submitAnswer(event)" class="flex flex-col sm:flex-row gap-3">
+                                <div class="relative flex-1">
+                                    <input type="text" id="student-answer" autocomplete="off" placeholder="e.g. 3, 1  or  x-3  or  4, -2/3" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-mono text-base focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                                </div>
+                                <button type="submit" id="submit-btn" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 active:scale-[0.98] text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-paper-plane"></i> Submit Answer
+                                </button>
+                            </form>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Accepts integers, fractions (e.g. -2/3), expressions (x-3), or comma-separated values.</p>
+                        </div>
+
+                        <!-- Status Message Banner -->
+                        <div id="status-banner" class="hidden mb-6 p-4 rounded-xl text-sm font-medium flex items-center space-x-3">
+                            <!-- Populated dynamically -->
+                        </div>
+
+                        <!-- Step-by-Step Solution Drawer -->
+                        <div id="solution-container" class="hidden border-t-2 border-dashed border-gray-200 dark:border-gray-700 pt-6">
+                            <div class="flex items-center space-x-2 text-brand-600 dark:text-brand-400 font-bold mb-3 text-lg">
+                                <i class="fa-solid fa-book-open"></i>
+                                <span>Step-by-Step Solution</span>
+                            </div>
+                            <div id="solution-content" class="bg-gray-50 dark:bg-gray-900/60 p-5 rounded-xl border border-gray-200 dark:border-gray-700 font-serif text-gray-800 dark:text-gray-200 leading-relaxed overflow-x-auto">
+                                <!-- Solution Rendered Here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Nav Controls -->
+                    <div class="flex justify-between items-center pt-6 border-t border-gray-100 dark:border-gray-700 mt-6">
+                        <button onclick="navigateProblem(-1)" id="prev-btn" class="px-4 py-2 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-lg text-sm transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-left"></i> Previous
+                        </button>
+                        <button onclick="navigateProblem(1)" id="next-btn" class="px-4 py-2 bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white font-semibold rounded-lg text-sm transition-all flex items-center gap-2">
+                            Next <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Google Classroom Turn-In Modal -->
+    <div id="turnin-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full p-6 border border-gray-200 dark:border-gray-700 flex flex-col">
+            <div class="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-gray-700 mb-4">
+                <h3 class="text-md font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-emerald-600"></i> Submit to Google Classroom
+                </h3>
+                <button onclick="document.getElementById('turnin-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <p class="text-xs text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                Enter your name below, then copy your unique <strong>Grade Token</strong> to paste into the <strong>Private Comment</strong> box on your Google Classroom assignment.
+            </p>
+
+            <!-- First & Last Name Input Fields -->
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1">First Name *</label>
+                    <input type="text" id="student-first-name" oninput="updateTurnInToken()" placeholder="Jane" class="w-full px-3 py-2 text-xs rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1">Last Name *</label>
+                    <input type="text" id="student-last-name" oninput="updateTurnInToken()" placeholder="Doe" class="w-full px-3 py-2 text-xs rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+            </div>
+
+            <div class="relative mb-4">
+                <textarea id="turnin-code-text" readonly class="w-full p-3 font-mono text-xs bg-gray-900 text-emerald-400 rounded-xl outline-none resize-none border border-gray-700 min-h-[90px] select-all"></textarea>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button onclick="copyTurnInToken()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-copy"></i> Copy Grade Token to Clipboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2"></div>
+
+    <!-- Application Logic -->
+    <script>
+        // Preset Dataset: 3 Algebra Practice Questions
+        const problems = [
+            {
+                id: "alg-1",
+                topic: "Algebra - Quadratic Equations",
+                statement: "Solve the quadratic equation for $x$:\n$$2x^2 - 8x + 6 = 0$$",
+                answer: "3, 1",
+                solution: "First, divide the entire equation by $2$ to simplify:\n$$x^2 - 4x + 3 = 0$$\n\nNext, factor the quadratic expression:\n$$(x - 3)(x - 1) = 0$$\n\nSet each factor equal to zero:\n$$x - 3 = 0 \\implies x = 3$$\n$$x - 1 = 0 \\implies x = 1$$\n\nThus, the solutions are $x = 3$ and $x = 1$ (entered as `3, 1` or `1, 3`)."
+            },
+            {
+                id: "alg-2",
+                topic: "Algebra - Rational Expressions",
+                statement: "Simplify the rational expression for $x \\neq -3$:\n$$\\frac{x^2 - 9}{x + 3}$$",
+                answer: "x-3",
+                solution: "Factor the numerator as a difference of squares:\n$$x^2 - 9 = (x - 3)(x + 3)$$\n\nSubstitute the factored numerator into the fraction:\n$$\\frac{(x - 3)(x + 3)}{x + 3}$$\n\nCancel the common factor $(x + 3)$ in both numerator and denominator:\n$$x - 3$$"
+            },
+            {
+                id: "alg-3",
+                topic: "Algebra - Absolute Value Equations",
+                statement: "Find all real values of $x$ that satisfy:\n$$|3x - 5| = 7$$",
+                answer: "4, -2/3",
+                solution: "Split the absolute value equation into two separate linear equations:\n\n**Case 1:**\n$$3x - 5 = 7 \\implies 3x = 12 \\implies x = 4$$\n\n**Case 2:**\n$$3x - 5 = -7 \\implies 3x = -2 \\implies x = -\\frac{2}{3}$$\n\nThus, the two solutions are $x = 4$ and $x = -\\frac{2}{3}$ (entered as `4, -2/3`)."
+            }
+        ];
+
+        let activeProblemIndex = 0;
+        let attemptsState = {};
+
+        // Custom KaTeX Renderer for guaranteed LaTeX formatting
+        function renderLatexInContainer(containerId, rawText) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = '';
+            if (!rawText) return;
+
+            // Split into inline ($...$) and block ($$...$$) math components
+            const regex = /(\$\$.*?\$\$|\$.*?\$)/gs;
+            const parts = rawText.split(regex);
+
+            parts.forEach(part => {
+                if (!part) return;
+
+                if (part.startsWith('$$') && part.endsWith('$$')) {
+                    // Block Math
+                    const mathStr = part.slice(2, -2).trim();
+                    const blockDiv = document.createElement('div');
+                    blockDiv.className = 'katex-display my-2 text-center';
+                    try {
+                        katex.render(mathStr, blockDiv, { displayMode: true, throwOnError: false });
+                    } catch (e) {
+                        blockDiv.textContent = part;
+                    }
+                    container.appendChild(blockDiv);
+                } else if (part.startsWith('$') && part.endsWith('$')) {
+                    // Inline Math
+                    const mathStr = part.slice(1, -1).trim();
+                    const inlineSpan = document.createElement('span');
+                    try {
+                        katex.render(mathStr, inlineSpan, { displayMode: false, throwOnError: false });
+                    } catch (e) {
+                        inlineSpan.textContent = part;
+                    }
+                    container.appendChild(inlineSpan);
+                } else {
+                    // Plain Text
+                    const textSpan = document.createElement('span');
+                    textSpan.innerText = part;
+                    container.appendChild(textSpan);
+                }
+            });
+        }
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            initAttemptsState();
+            renderProblemList();
+            loadActiveProblem();
+        });
+
+        function initAttemptsState() {
+            attemptsState = {};
+            problems.forEach(p => {
+                attemptsState[p.id] = {
+                    attemptsLeft: 2,
+                    status: 'unattempted',
+                    userAnswer: ''
+                };
+            });
+        }
+
+        function renderProblemList() {
+            const listEl = document.getElementById('problem-list');
+            const countBadge = document.getElementById('problem-count-badge');
+            if (!listEl) return;
+
+            countBadge.textContent = `${problems.length} items`;
+            listEl.innerHTML = '';
+
+            problems.forEach((p, idx) => {
+                const st = attemptsState[p.id] || { status: 'unattempted', attemptsLeft: 2 };
+                const isSelected = idx === activeProblemIndex;
+
+                let badgeColor = 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300';
+                let icon = '<i class="fa-regular fa-circle"></i>';
+
+                if (st.status === 'solved') {
+                    badgeColor = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300';
+                    icon = '<i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400"></i>';
+                } else if (st.status === 'failed') {
+                    badgeColor = 'bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300';
+                    icon = '<i class="fa-solid fa-circle-xmark text-rose-600 dark:text-rose-400"></i>';
+                } else if (st.attemptsLeft === 1) {
+                    badgeColor = 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300';
+                    icon = '<i class="fa-solid fa-triangle-exclamation text-amber-600"></i>';
+                }
+
+                const btn = document.createElement('button');
+                btn.onclick = () => selectProblem(idx);
+                btn.className = `w-full text-left p-3 rounded-xl transition-all flex items-center justify-between border text-xs ${
+                    isSelected
+                        ? 'border-brand-500 bg-brand-50/50 dark:bg-brand-900/20 font-bold text-brand-700 dark:text-brand-300 shadow-sm'
+                        : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300'
+                }`;
+
+                btn.innerHTML = `
+                    <div class="flex items-center gap-2 truncate">
+                        ${icon}
+                        <span class="truncate">#${idx + 1} - ${p.topic || 'Problem'}</span>
+                    </div>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] uppercase ${badgeColor} shrink-0">
+                        ${st.status === 'solved' ? 'Solved' : st.status === 'failed' ? 'Failed' : st.attemptsLeft === 1 ? '1 Left' : 'Ready'}
+                    </span>
+                `;
+                listEl.appendChild(btn);
+            });
+        }
+
+        function loadActiveProblem() {
+            if (problems.length === 0) return;
+            const p = problems[activeProblemIndex];
+            const st = attemptsState[p.id] || { status: 'unattempted', attemptsLeft: 2, userAnswer: '' };
+
+            document.getElementById('current-problem-num').textContent = `Problem ${activeProblemIndex + 1}`;
+            document.getElementById('current-problem-topic').textContent = p.topic || 'Algebra';
+
+            // KaTeX render for problem statement
+            renderLatexInContainer('problem-statement', p.statement);
+
+            // Attempt dots
+            const dotsContainer = document.getElementById('attempt-dots');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < 2; i++) {
+                const dot = document.createElement('span');
+                const isFilled = i < st.attemptsLeft;
+                dot.className = `w-3 h-3 rounded-full inline-block transition-colors ${
+                    isFilled ? 'bg-brand-600' : 'bg-gray-300 dark:bg-gray-600'
+                }`;
+                dotsContainer.appendChild(dot);
+            }
+
+            const inputEl = document.getElementById('student-answer');
+            const submitBtn = document.getElementById('submit-btn');
+            const hintBox = document.getElementById('hint-box');
+            const statusBanner = document.getElementById('status-banner');
+            const solContainer = document.getElementById('solution-container');
+
+            inputEl.value = st.userAnswer || '';
+            hintBox.classList.add('hidden');
+            statusBanner.classList.add('hidden');
+            solContainer.classList.add('hidden');
+
+            if (st.status === 'solved') {
+                inputEl.disabled = true;
+                submitBtn.disabled = true;
+                submitBtn.className = "px-6 py-3 bg-emerald-600 text-white font-bold rounded-lg cursor-not-allowed opacity-90 flex items-center justify-center gap-2";
+                submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Completed';
+
+                statusBanner.className = "mb-6 p-4 rounded-xl text-sm font-medium flex items-center space-x-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300";
+                statusBanner.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500 text-lg"></i><span>Correct! You solved this algebra problem.</span>`;
+                statusBanner.classList.remove('hidden');
+
+                renderLatexInContainer('solution-content', p.solution || 'No step-by-step solution provided.');
+                solContainer.classList.remove('hidden');
+            } else if (st.status === 'failed') {
+                inputEl.disabled = true;
+                submitBtn.disabled = true;
+                submitBtn.className = "px-6 py-3 bg-rose-600 text-white font-bold rounded-lg cursor-not-allowed opacity-90 flex items-center justify-center gap-2";
+                submitBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> Exhausted';
+
+                statusBanner.className = "mb-6 p-4 rounded-xl text-sm font-medium flex items-center space-x-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300";
+                statusBanner.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-500 text-lg"></i><span>0 attempts remaining. Review the official solution below.</span>`;
+                statusBanner.classList.remove('hidden');
+
+                renderLatexInContainer('solution-content', p.solution || 'No step-by-step solution provided.');
+                solContainer.classList.remove('hidden');
+            } else {
+                inputEl.disabled = false;
+                submitBtn.disabled = false;
+                submitBtn.className = "px-6 py-3 bg-brand-600 hover:bg-brand-700 active:scale-[0.98] text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2";
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Answer';
+
+                if (st.attemptsLeft === 1) {
+                    hintBox.classList.remove('hidden');
+                }
+            }
+
+            document.getElementById('prev-btn').disabled = activeProblemIndex === 0;
+            document.getElementById('next-btn').disabled = activeProblemIndex === problems.length - 1;
+
+            updateStats();
+        }
+
+        function selectProblem(index) {
+            if (index >= 0 && index < problems.length) {
+                activeProblemIndex = index;
+                renderProblemList();
+                loadActiveProblem();
+            }
+        }
+
+        function navigateProblem(direction) {
+            const nextIdx = activeProblemIndex + direction;
+            if (nextIdx >= 0 && nextIdx < problems.length) {
+                selectProblem(nextIdx);
+            }
+        }
+
+        function checkAnswerEquivalence(userVal, correctVal) {
+            if (!userVal || !correctVal) return false;
+
+            const sanitize = (str) => str.toString().trim().toLowerCase()
+                .replace(/\s+/g, '')
+                .replace(/\\cdot/g, '*')
+                .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)')
+                .replace(/\\pi/g, 'pi')
+                .replace(/\\sqrt\{([^}]+)\}/g, 'sqrt($1)');
+
+            const uNorm = sanitize(userVal);
+            const cNorm = sanitize(correctVal);
+
+            if (uNorm === cNorm) return true;
+
+            if (cNorm.includes(',') && uNorm.includes(',')) {
+                const uParts = uNorm.split(',').map(s => s.trim()).sort().join(',');
+                const cParts = cNorm.split(',').map(s => s.trim()).sort().join(',');
+                if (uParts === cParts) return true;
+            }
+
+            try {
+                const evalMath = (expr) => {
+                    if (expr.includes('=')) {
+                        expr = expr.split('=')[1] || expr;
+                    }
+                    return Function(`"use strict"; return (${expr.replace(/pi/g, 'Math.PI').replace(/sqrt\(([^)]+)\)/g, 'Math.sqrt($1)')})`)();
+                };
+                const uNum = evalMath(uNorm);
+                const cNum = evalMath(cNorm);
+                if (typeof uNum === 'number' && typeof cNum === 'number' && !isNaN(uNum) && !isNaN(cNum)) {
+                    return Math.abs(uNum - cNum) < 1e-4;
+                }
+            } catch (e) {
+                // Ignore evaluation errors
+            }
+
+            return false;
+        }
+
+        function submitAnswer(event) {
+            event.preventDefault();
+            const p = problems[activeProblemIndex];
+            const state = attemptsState[p.id];
+            const answerInput = document.getElementById('student-answer');
+            const userVal = answerInput.value.trim();
+
+            if (!userVal) {
+                showToast("Please enter an answer before submitting.", "warning");
+                return;
+            }
+
+            state.userAnswer = userVal;
+            const isCorrect = checkAnswerEquivalence(userVal, p.answer);
+
+            if (isCorrect) {
+                state.status = 'solved';
+                showToast("Correct Answer!", "success");
+            } else {
+                state.attemptsLeft -= 1;
+                if (state.attemptsLeft <= 0) {
+                    state.status = 'failed';
+                    showToast("Incorrect. No remaining attempts.", "error");
+                } else {
+                    showToast("Incorrect! Check your solution and try 1 last attempt.", "warning");
+                }
+            }
+
+            updateStats();
+            renderProblemList();
+            loadActiveProblem();
+        }
+
+        function updateStats() {
+            let solvedCount = 0;
+            let failedCount = 0;
+
+            Object.values(attemptsState).forEach(st => {
+                if (st.status === 'solved') solvedCount++;
+                if (st.status === 'failed') failedCount++;
+            });
+
+            const total = problems.length;
+            const accuracy = total > 0 ? Math.round((solvedCount / total) * 100) : 0;
+
+            document.getElementById('score-display').textContent = `${solvedCount} / ${total}`;
+            document.getElementById('accuracy-display').textContent = `${accuracy}%`;
+            document.getElementById('stat-solved').textContent = solvedCount;
+            document.getElementById('stat-failed').textContent = failedCount;
+
+            const progressWidth = total > 0 ? (solvedCount / total) * 100 : 0;
+            document.getElementById('progress-bar-fill').style.width = `${progressWidth}%`;
+        }
+
+        // Google Classroom Grade Token Logic
+        function generateClassroomTurnInCode() {
+            if (sessionStorage.getItem('math_student_fname')) {
+                document.getElementById('student-first-name').value = sessionStorage.getItem('math_student_fname');
+            }
+            if (sessionStorage.getItem('math_student_lname')) {
+                document.getElementById('student-last-name').value = sessionStorage.getItem('math_student_lname');
+            }
+
+            updateTurnInToken();
+            document.getElementById('turnin-modal').classList.remove('hidden');
+        }
+
+        function updateTurnInToken() {
+            const firstName = document.getElementById('student-first-name')?.value.trim() || '';
+            const lastName = document.getElementById('student-last-name')?.value.trim() || '';
+
+            if (firstName) sessionStorage.setItem('math_student_fname', firstName);
+            if (lastName) sessionStorage.setItem('math_student_lname', lastName);
+
+            const fullName = (firstName || lastName) ? `${lastName}${lastName && firstName ? ', ' : ''}${firstName}` : `Student-${Math.floor(1000 + Math.random() * 9000)}`;
+
+            let solvedCount = 0;
+            Object.values(attemptsState).forEach(st => { if (st.status === 'solved') solvedCount++; });
+
+            const payload = {
+                studentName: fullName,
+                firstName: firstName,
+                lastName: lastName,
+                score: solvedCount,
+                total: problems.length,
+                accuracy: problems.length > 0 ? Math.round((solvedCount / problems.length) * 100) : 0,
+                details: attemptsState,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            };
+
+            const encoded = btoa(JSON.stringify(payload));
+            const token = `MATH-GRADE::${encoded}`;
+
+            const tokenBox = document.getElementById('turnin-code-text');
+            if (tokenBox) tokenBox.value = token;
+        }
+
+        function copyTurnInToken() {
+            const firstName = document.getElementById('student-first-name')?.value.trim();
+            const lastName = document.getElementById('student-last-name')?.value.trim();
+
+            if (!firstName || !lastName) {
+                showToast("Please enter both your First and Last Name before copying.", "warning");
+                return;
+            }
+
+            const tokenText = document.getElementById('turnin-code-text');
+            tokenText.select();
+            document.execCommand('copy');
+            showToast("Grade Token copied! Paste this in Google Classroom private comments.", "success");
+            document.getElementById('turnin-modal').classList.add('hidden');
+        }
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            if (document.documentElement.classList.contains('dark')) {
+                icon.className = "fa-solid fa-sun text-amber-400 text-lg";
+            } else {
+                icon.className = "fa-solid fa-moon text-lg";
+            }
+        }
+
+        function showToast(msg, type = "info") {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            let colors = "bg-brand-600 text-white";
+            if (type === "success") colors = "bg-emerald-600 text-white";
+            if (type === "error") colors = "bg-rose-600 text-white";
+            if (type === "warning") colors = "bg-amber-600 text-white";
+
+            toast.className = `px-4 py-3 rounded-xl shadow-lg font-semibold text-xs flex items-center gap-2 transition-all transform translate-y-2 opacity-0 ${colors}`;
+            toast.innerHTML = `<span>${msg}</span>`;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+```eof
+
+### Summary of Changes:
+- **Clean Student View Only**: Stripped away all top-level tab buttons for authoring/gradebook views, offering a simple student practice screen.
+- **Preloaded Algebra Test Set**: Includes 3 Algebra problems with step-by-step LaTeX solutions.
+- **Guaranteed KaTeX LaTeX Rendering**: Direct regex splitting renders math formulas (`$...$` and `$$...$$`) into KaTeX nodes.
