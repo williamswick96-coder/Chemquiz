@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saint Peter the Rock Academy — Section 1.8: Solving Absolute-Value Equations and Inequalities</title>
+    <!-- MathJax 3 Configuration & Loader -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* ==========================================================================
+           TUFTE INFORMATION DESIGN TOKENS & TYPOGRAPHY
+           ========================================================================== */
+        :root {
+            --bg-paper: #fffff8;
+            --ink-primary: #111111;
+            --ink-secondary: #3f3f3c;
+            --ink-muted: #6c6b65;
+            --accent-crimson: #991b1b;
+            --accent-slate: #1e3a8a;
+            --accent-forest: #1f5132;
+            --hairline: #dcdcd2;
+            --ghost-line: #b4b4aa;
+            --font-serif: "ET Book", Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+            --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            background-color: var(--bg-paper);
+            color: var(--ink-primary);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-serif);
+            line-height: 1.68;
+            background-color: var(--bg-paper);
+            color: var(--ink-primary);
+        }
+
+        /* ==========================================================================
+           ASYMMETRIC TWO-COLUMN GRID (58% Main Measure / 4% Gutter / 38% Margin)
+           ========================================================================== */
+        .tufte-wrapper {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 2.75rem 2rem 5rem 2rem;
+        }
+
+        .tufte-row {
+            display: grid;
+            grid-template-columns: 58% 38%;
+            column-gap: 4%;
+            align-items: start;
+        }
+
+        .main-col {
+            min-width: 0;
+        }
+
+        .margin-col {
+            min-width: 0;
+            font-size: 0.875rem;
+            line-height: 1.54;
+            color: var(--ink-secondary);
+        }
+
+        /* Header & Institutional Epigraph */
+        header.doc-header {
+            border-bottom: 1px solid var(--hairline);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2.25rem;
+        }
+
+        .institution-kicker {
+            font-size: 0.78rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--accent-slate);
+            margin-bottom: 0.35rem;
+        }
+
+        h1.doc-title {
+            font-weight: normal;
+            font-size: 2.1rem;
+            line-height: 1.22;
+            margin: 0 0 0.5rem 0;
+            color: var(--ink-primary);
+        }
+
+        .doc-subtitle {
+            font-style: italic;
+            font-size: 1.06rem;
+            color: var(--ink-secondary);
+            margin: 0 0 1.25rem 0;
+        }
+
+        /* Unobtrusive Hairline Student Identification Fields */
+        .student-meta-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.75rem;
+            align-items: baseline;
+            font-size: 0.92rem;
+            color: var(--ink-secondary);
+        }
+
+        .meta-field {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.45rem;
+        }
+
+        .meta-field label {
+            font-style: italic;
+            color: var(--ink-muted);
+        }
+
+        .tufte-line-input {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            color: var(--ink-primary);
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #777770;
+            padding: 0.1rem 0.25rem;
+            border-radius: 0;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .tufte-line-input:focus {
+            border-bottom: 1.5px solid var(--accent-crimson);
+        }
+
+        .tufte-line-input::placeholder {
+            color: #9e9d95;
+            font-style: italic;
+            font-size: 0.88rem;
+        }
+
+        /* Introductory Exposition & Small Multiples */
+        .exposition-block {
+            margin-bottom: 1.75rem;
+            padding-bottom: 1.15rem;
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        .ref-toggle-link {
+            font-family: var(--font-serif);
+            font-size: 0.86rem;
+            font-style: italic;
+            color: var(--accent-slate);
+            background: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: var(--hairline);
+            text-underline-offset: 3px;
+        }
+
+        .ref-toggle-link:hover {
+            color: var(--accent-crimson);
+            text-decoration-color: var(--accent-crimson);
+        }
+
+        .reference-drawer {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .reference-drawer.open {
+            display: block;
+        }
+
+        .small-multiples-figure {
+            margin: 0.9rem 0 0.5rem 0;
+        }
+
+        .small-multiples-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.9rem;
+            align-items: start;
+        }
+
+        .multiple-cell {
+            text-align: center;
+        }
+
+        .multiple-title {
+            font-size: 0.86rem;
+            margin-bottom: 0.15rem;
+            color: var(--ink-primary);
+        }
+
+        .multiple-caption {
+            font-size: 0.78rem;
+            font-style: italic;
+            color: var(--ink-muted);
+            margin-top: 0.15rem;
+        }
+
+        .figure-caption {
+            font-size: 0.84rem;
+            color: var(--ink-muted);
+            font-style: italic;
+            margin-top: 0.65rem;
+        }
+
+        /* Minimal Tufte Problem Index Bar */
+        .problem-nav-strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 1px solid var(--hairline);
+            font-size: 0.88rem;
+        }
+
+        .problem-counter-label {
+            font-style: italic;
+            color: var(--ink-secondary);
+        }
+
+        .problem-index-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: baseline;
+        }
+
+        .index-step-btn {
+            font-family: var(--font-serif);
+            font-size: 0.86rem;
+            font-variant-numeric: oldstyle-nums;
+            background: transparent;
+            border: none;
+            border-bottom: 1.5px solid transparent;
+            padding: 0.05rem 0.2rem;
+            color: var(--ink-muted);
+            cursor: pointer;
+            transition: color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .index-step-btn:hover {
+            color: var(--ink-primary);
+        }
+
+        .index-step-btn.active {
+            color: var(--accent-crimson);
+            border-bottom-color: var(--accent-crimson);
+            font-weight: bold;
+        }
+
+        .index-step-btn.solved {
+            color: var(--accent-forest);
+        }
+
+        .index-step-btn.reviewed {
+            color: var(--accent-slate);
+        }
+
+        /* Problem Typography & Borderless Inline Inputs */
+        section.problem-block {
+            display: none;
+            margin-bottom: 2rem;
+            padding-bottom: 1.75rem;
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        section.problem-block.active-problem {
+            display: grid;
+        }
+
+        h2.problem-heading {
+            font-weight: normal;
+            font-size: 1.35rem;
+            line-height: 1.3;
+            margin: 0 0 0.7rem 0;
+            color: var(--ink-primary);
+        }
+
+        .problem-num {
+            color: var(--accent-crimson);
+            font-variant-numeric: oldstyle-nums;
+            margin-right: 0.35rem;
+        }
+
+        .exercise-tag {
+            font-size: 0.82rem;
+            font-style: italic;
+            color: var(--accent-slate);
+            margin-left: 0.4rem;
+        }
+
+        p {
+            margin: 0 0 0.95rem 0;
+        }
+
+        .step-row {
+            margin: 1.05rem 0;
+            padding-left: 0.85rem;
+            border-left: 1.5px solid var(--hairline);
+        }
+
+        .step-label {
+            font-style: italic;
+            color: var(--accent-slate);
+            margin-right: 0.35rem;
+        }
+
+        .inline-math-prompt {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.55rem;
+            margin-top: 0.5rem;
+        }
+
+        .math-inline-input {
+            font-family: var(--font-mono);
+            font-size: 0.92rem;
+            color: var(--ink-primary);
+            background: transparent;
+            border: none;
+            border-bottom: 1.5px solid #555550;
+            padding: 0.15rem 0.35rem;
+            min-width: 150px;
+            max-width: 230px;
+            border-radius: 0;
+            outline: none;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .math-inline-input:focus {
+            border-bottom-color: var(--accent-crimson);
+        }
+
+        .math-inline-input:disabled {
+            border-bottom-style: dotted;
+            color: var(--ink-secondary);
+        }
+
+        .math-inline-input::placeholder {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 0.86rem;
+            color: #9a9990;
+        }
+
+        /* Quiet Hairline Action Buttons */
+        .tufte-action-btn {
+            font-family: var(--font-serif);
+            font-size: 0.86rem;
+            color: var(--accent-crimson);
+            background: transparent;
+            border: 1px solid var(--hairline);
+            padding: 0.2rem 0.65rem;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .tufte-action-btn:hover:not(:disabled) {
+            border-color: var(--accent-crimson);
+            background-color: rgba(153, 27, 27, 0.04);
+        }
+
+        .tufte-action-btn:disabled {
+            color: var(--ink-muted);
+            border-color: var(--hairline);
+            cursor: default;
+        }
+
+        .tufte-ghost-btn {
+            font-family: var(--font-serif);
+            font-size: 0.82rem;
+            font-style: italic;
+            color: var(--ink-muted);
+            background: transparent;
+            border: none;
+            padding: 0.2rem 0.35rem;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: var(--hairline);
+            text-underline-offset: 3px;
+        }
+
+        .tufte-ghost-btn:hover:not(:disabled) {
+            color: var(--ink-primary);
+            text-decoration-color: var(--ink-primary);
+        }
+
+        .tufte-ghost-btn:disabled {
+            display: none;
+        }
+
+        /* Next Problem Progression Row (Shown after solution or completed attempts) */
+        .next-problem-bar {
+            display: none;
+            margin-top: 1.45rem;
+            padding-top: 0.95rem;
+            border-top: 1px dotted var(--hairline);
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .next-problem-bar.visible {
+            display: flex;
+        }
+
+        .next-problem-hint {
+            font-style: italic;
+            font-size: 0.86rem;
+            color: var(--ink-muted);
+        }
+
+        /* ==========================================================================
+           MARGIN SIDENOTES & QUIET VERIFICATION FEEDBACK
+           ========================================================================== */
+        .sidenote-card {
+            margin-bottom: 1.05rem;
+            padding-left: 0.85rem;
+            border-left: 1px solid var(--hairline);
+        }
+
+        .sidenote-num {
+            font-size: 0.75rem;
+            vertical-align: super;
+            color: var(--accent-crimson);
+            margin-right: 0.2rem;
+        }
+
+        .sidenote-title {
+            font-style: italic;
+            color: var(--ink-primary);
+        }
+
+        .margin-feedback {
+            margin-top: 0.75rem;
+            padding: 0.65rem 0.85rem;
+            border-left: 2px solid var(--hairline);
+            font-size: 0.86rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .margin-feedback.visible {
+            display: block;
+        }
+
+        .margin-feedback.status-correct {
+            border-left-color: var(--accent-forest);
+            color: var(--ink-primary);
+        }
+
+        .margin-feedback.status-retry {
+            border-left-color: var(--accent-crimson);
+            color: var(--ink-primary);
+        }
+
+        .margin-feedback.status-revealed {
+            border-left-color: var(--accent-slate);
+            color: var(--ink-primary);
+        }
+
+        .feedback-lead {
+            font-weight: bold;
+            font-size: 0.84rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .status-correct .feedback-lead {
+            color: var(--accent-forest);
+        }
+
+        .status-retry .feedback-lead {
+            color: var(--accent-crimson);
+        }
+
+        .status-revealed .feedback-lead {
+            color: var(--accent-slate);
+        }
+
+        .worked-derivation {
+            margin-top: 0.45rem;
+            padding-top: 0.45rem;
+            border-top: 1px dotted var(--hairline);
+            color: var(--ink-secondary);
+            font-size: 0.84rem;
+        }
+
+        .solution-numberline {
+            margin-top: 0.55rem;
+            padding-top: 0.35rem;
+        }
+
+        /* ==========================================================================
+           INLINE GRADE VERIFICATION RECORD (NO POP-UP MODAL)
+           ========================================================================== */
+        .grade-record-section {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1.25rem;
+        }
+
+        .grade-record-section.active-record {
+            display: grid;
+        }
+
+        .grade-record-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .grade-record-title {
+            font-size: 1.25rem;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        .token-output-panel {
+            display: none;
+            margin-top: 1.15rem;
+            padding: 1.1rem 1.25rem;
+            border: 1px solid var(--hairline);
+            background-color: rgba(220, 220, 210, 0.16);
+        }
+
+        .token-output-panel.visible {
+            display: block;
+        }
+
+        .token-summary-line {
+            font-size: 0.92rem;
+            margin-bottom: 0.65rem;
+            color: var(--ink-primary);
+        }
+
+        .token-code-box {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            line-height: 1.45;
+            color: var(--ink-primary);
+            background: var(--bg-paper);
+            border: 1px solid var(--hairline);
+            padding: 0.65rem 0.8rem;
+            word-break: break-all;
+            user-select: all;
+            margin-bottom: 0.75rem;
+        }
+
+        .copy-confirmation {
+            font-style: italic;
+            font-size: 0.84rem;
+            color: var(--accent-forest);
+            margin-left: 0.65rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .copy-confirmation.show {
+            opacity: 1;
+        }
+
+        /* ==========================================================================
+           RESPONSIVE MOBILE COLLAPSE (< 900px)
+           ========================================================================== */
+        .mobile-sidenote-toggle {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            section.problem-block {
+                margin-bottom: 1.75rem;
+                padding-bottom: 1.5rem;
+            }
+
+            section.problem-block.active-problem {
+                display: block;
+            }
+
+            .grade-record-section.active-record {
+                display: block;
+            }
+
+            .small-multiples-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+            }
+
+            .mobile-sidenote-toggle {
+                display: inline-block;
+                font-family: var(--font-serif);
+                font-size: 0.82rem;
+                font-style: italic;
+                color: var(--accent-slate);
+                background: transparent;
+                border: none;
+                padding: 0.15rem 0;
+                margin-top: 0.35rem;
+                cursor: pointer;
+                text-decoration: underline;
+                text-decoration-color: var(--hairline);
+                text-underline-offset: 3px;
+            }
+
+            .margin-col {
+                margin-top: 0.65rem;
+            }
+
+            .sidenote-collapsible {
+                display: none;
+                margin-top: 0.5rem;
+                padding: 0.55rem 0.75rem;
+                border-left: 1.5px solid var(--accent-slate);
+                background-color: rgba(220, 220, 210, 0.14);
+            }
+
+            .sidenote-collapsible.open {
+                display: block;
+            }
+
+            .margin-feedback.visible {
+                display: block;
+                margin-top: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="tufte-wrapper">
+
+    <!-- ======================================================================
+         INSTITUTIONAL HEADER & STUDENT IDENTIFICATION
+         ====================================================================== -->
+    <header class="doc-header tufte-row">
+        <div class="main-col">
+            <div class="institution-kicker">Saint Peter the Rock Academy &mdash; Mathematics Department</div>
+            <h1 class="doc-title">Algebra 2 &middot; Section 1.8: Solving Absolute-Value Equations and Inequalities</h1>
+            <p class="doc-subtitle">Practice solving absolute-value equations and inequalities one problem at a time. Each problem connects the algebra steps to distance on a number line, with helpful notes in the right margin.</p>
+
+            <div class="student-meta-bar">
+                <div class="meta-field">
+                    <label for="student-first-name">First Name:</label>
+                    <input type="text" id="student-first-name" class="tufte-line-input" placeholder="e.g., Clara" autocomplete="given-name">
+                </div>
+                <div class="meta-field">
+                    <label for="student-last-name">Last Name:</label>
+                    <input type="text" id="student-last-name" class="tufte-line-input" placeholder="e.g., Barton" autocomplete="family-name">
+                </div>
+            </div>
+        </div>
+
+        <aside class="margin-col">
+            <div class="sidenote-card">
+                <span class="sidenote-title">How This Works.</span> Type your simplified answer directly on the line&mdash;fractions like <code>-8/3</code>, compound inequalities like <code>-9 &lt; x &lt; 6</code>, or two solutions separated by a comma. You have two tries per problem before the full solution and number line appear here.
+            </div>
+        </aside>
+    </header>
+
+    <main>
+
+        <!-- ==================================================================
+             COLLAPSIBLE GEOMETRIC REFERENCE (3-PANEL SMALL MULTIPLES)
+             ================================================================== -->
+        <section class="exposition-block tufte-row">
+            <div class="main-col">
+                <button type="button" class="ref-toggle-link" id="ref-drawer-btn" onclick="toggleReferenceDrawer()">
+                    &#9656; Quick Review: Absolute Value as Distance on a Number Line
+                </button>
+
+                <div class="reference-drawer" id="reference-drawer">
+                    <p style="margin-top: 0.65rem;">
+                        Think of $|x - a|$ as the distance between $x$ and a center number $a$ on a number line. When we compare that distance to a positive number $c &gt; 0$, we get three classic solution patterns:
+                    </p>
+
+                    <figure class="small-multiples-figure" aria-label="Small multiples comparing geometric distance on the real number line for equality, less-than conjunction, and greater-than disjunction">
+                        <div class="small-multiples-grid" id="intro-small-multiples">
+                            <!-- Rendered via high data-ink SVG script on load -->
+                        </div>
+                        <figcaption class="figure-caption">
+                            Figure 1. Absolute value measures distance from center $a$. Case I gives two exact points at distance $c$. Case II shades the interval closer than $c$ units from $a$ (an 'and' statement). Case III shades the outer rays farther than $c$ units from $a$ (an 'or' statement).
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <button type="button" class="mobile-sidenote-toggle" onclick="toggleMobileNote('note-intro')">&#9656; Note 0: Always Isolate First</button>
+            </div>
+
+            <aside class="margin-col">
+                <div class="sidenote-card sidenote-collapsible" id="note-intro">
+                    <span class="sidenote-num">0</span>
+                    <span class="sidenote-title">Always Isolate First.</span> Get the absolute-value bars completely by themselves on one side before splitting into two cases. Also remember that distance is never negative ($|u| \ge 0$), so an inequality like $|u| &lt; -5$ has no solution.
+                </div>
+            </aside>
+        </section>
+
+        <!-- ==================================================================
+             MINIMAL TUFTE SINGLE-PROBLEM NAVIGATION STRIP
+             ================================================================== -->
+        <nav class="problem-nav-strip" aria-label="Exercise navigation">
+            <span class="problem-counter-label" id="problem-counter-text">Problem 1 of 7</span>
+            <div class="problem-index-links" id="problem-index-links">
+                <button type="button" class="index-step-btn active" id="nav-idx-0" onclick="goToProblem(0)">I</button>
+                <button type="button" class="index-step-btn" id="nav-idx-1" onclick="goToProblem(1)">II</button>
+                <button type="button" class="index-step-btn" id="nav-idx-2" onclick="goToProblem(2)">III</button>
+                <button type="button" class="index-step-btn" id="nav-idx-3" onclick="goToProblem(3)">IV</button>
+                <button type="button" class="index-step-btn" id="nav-idx-4" onclick="goToProblem(4)">V</button>
+                <button type="button" class="index-step-btn" id="nav-idx-5" onclick="goToProblem(5)">VI</button>
+                <button type="button" class="index-step-btn" id="nav-idx-6" onclick="goToProblem(6)">VII</button>
+                <button type="button" class="index-step-btn" id="nav-idx-7" onclick="goToProblem(7)">Summary</button>
+            </div>
+        </nav>
+
+        <!-- ==================================================================
+             PROBLEM 1 (EXERCISE 33): |10 - 4x| = 28
+             ================================================================== -->
+        <section class="problem-block tufte-row active-problem" id="sec-p1">
+            <div class="main-col">
+                <h2 class="problem-heading">
+                    <span class="problem-num">1.</span>Solving a Two-Branch Absolute-Value Equation
+                    <span class="exercise-tag">(Exercise 33)</span>
+                </h2>
+                <p>
+                    Solve the equation for $x$:
+                    $$|10 - 4x| = 28.$$
+                </p>
+
+                <div class="step-row">
+                    <span class="step-label">Your Answer.</span> Enter both solutions separated by a comma.
+                    <div class="inline-math-prompt">
+                        <span>$x =$</span>
+                        <input type="text" id="input-p1" class="math-inline-input" placeholder="e.g. x = 3 or x = -7" onkeydown="if(event.key==='Enter') checkProblem('p1')">
+                        <button type="button" id="btn-p1" class="tufte-action-btn" onclick="checkProblem('p1')">Check Answer</button>
+                        <button type="button" id="gu-p1" class="tufte-ghost-btn" onclick="revealProblem('p1')">Show Solution</button>
+                    </div>
+                </div>
+
+                <div class="next-problem-bar" id="next-bar-0">
+                    <span class="next-problem-hint">Problem 1 complete.</span>
+                    <button type="button" class="tufte-action-btn" onclick="goToProblem(1)">Next Problem &rarr;</button>
+                </div>
+
+                <button type="button" class="mobile-sidenote-toggle" onclick="toggleMobileNote('note-p1')">&#9656; Note 1: Distance Meaning</button>
+            </div>
+
+            <aside class="margin-col">
+                <div class="sidenote-card sidenote-collapsible" id="note-p1">
+                    <span class="sidenote-num">1</span>
+                    <span class="sidenote-title">Distance meaning.</span> $|10 - 4x| = 28$ means the expression $10 - 4x$ is $28$ units away from $0$, so it equals $28$ or $-28$. Note: You can write fractions as <code>-9/2</code> or <code>-4.5</code>.
+                </div>
+                <div class="margin-feedback" id="fb-p1"></div>
+            </aside>
+        </section>
+
+        <!-- ==================================================================
+             PROBLEM 2 (EXERCISE 38): |4 - 3x| - 9 = 3
+             ================================================================== -->
+        <section class="problem-block tufte-row" id="sec-p2">
+            <div class="main-col">
+                <h2 class="problem-heading">
+                    <span class="problem-num">2.</span>Isolating the Absolute-Value Bars First
+                    <span class="exercise-tag">(Exercise 38)</span>
+                </h2>
+                <p>
+                    Solve the equation for $x$:
+                    $$|4 - 3x| - 9 = 3.$$
+                </p>
+
+                <div class="step-row">
+                    <span class="step-label">Your Answer.</span> Enter both solutions as simplified fractions separated by a comma.
+                    <div class="inline-math-prompt">
+                        <span>$x =$</span>
+                        <input type="text" id="input-p2" class="math-inline-input" placeholder="e.g. -2/5, 7/5" onkeydown="if(event.key==='Enter') checkProblem('p2')">
+                        <button type="button" id="btn-p2" class="tufte-action-btn" onclick="checkProblem('p2')">Check Answer</button>
+                        <button type="button" id="gu-p2" class="tufte-ghost-btn" onclick="revealProblem('p2')">Show Solution</button>
+                    </div>
+                </div>
+
+                <div class="next-problem-bar" id="next-bar-1">
+                    <span class="next-problem-hint">Problem 2 complete.</span>
+                    <button type="button" class="tufte-action-btn" onclick="goToProblem(2)">Next Problem &rarr;</button>
+                </div>
+
+                <button type="button" class="mobile-sidenote-toggle" onclick="toggleMobileNote('note-p2')">&#9656; Note 2: Isolate First!</button>
+            </div>
+
+            <aside class="margin-col">
+                <div class="sidenote-card sidenote-collapsible" id="note-p2">
+                    <span class="sidenote-num">2</span>
+                    <span class="sidenote-title">Isolate first!</span> Always get the absolute value bars by themselves on one side before splitting into two equations. Add $9$ to both sides first.
+                </div>
+                <div class="margin-feedback" id="fb-p2"></div>
+            </aside>
+        </section>
+
+        <!-- ==================================================================
+             PROBLEM 3 (EXERCISE 49): |(2x + 3)/5| < 3
+             ================================================================== -->
+        <section class="problem-block tufte-row" id="sec-p3">
+            <div class="main-col">
+                <h2 class="problem-heading">
+                    <span class="problem-num">3.</span>Solving a Less-Than Absolute-Value Inequality
+                    <span class="exercise-tag">(Exercise 49)</span>
+                </h2>
+                <p>
+                    Solve the inequality and write your answer as a compound inequality:
+                    $$\left|\frac{2x + 3}{5}\right| &lt; 3.$$
+                </p>
+
+                <div class="step-row">
+                    <span class="step-label">Your Answer.</span> Write the compound inequality for $x$.
+                    <div class="inline-math-prompt">
+                        <span>Solution:</span>
+                        <input type="text" id="input-p3" class="math-inline-input" placeholder="e.g. -4 < x < 5" onkeydown="if(event.key==='Enter') checkProblem('p3')">
+                        <button type="button" id="btn-p3" class="tufte-action-btn" onclick="checkProblem('p3')">Check Answer</button>
+                        <button type="button" id="gu-p3" class="tufte-ghost-btn" onclick="revealProblem('p3')">Show Solution</button>
+                    </div>
+                </div>
+
+                <div class="next-problem-bar" id="next-bar-2">
+                    <span class="next-problem-hint">Problem 3 complete.</span>
+                    <button type="button" class="tufte-action-btn" onclick="goToProblem(3)">Next Problem &rarr;</button>
+                </div>
+
+                <button type="button" class="mobile-sidenote-toggle" onclick="toggleMobileNote('note-p3')">&#9656; Note 3: Less-Than Rule ('and')</button>
+            </div>
+
+            <aside class="margin-col">
+                <div class="sidenote-card sidenote-collapsible" id="note-p3">
+                    <span class="sidenote-num">3</span>
+                    <span class="sidenote-title">Less-than rule ('and').</span> Because $|u| &lt; 3$ keeps the distance within $3$ units of $0$, rewrite it as a single compound inequality: $-3 &lt; \frac{2x+3}{5} &lt; 3$.
+                </div>
+                <div class="margin-feedback" id="fb-p3"></div>
+            </aside>
+        </section>
+
+        <!-- ==================================================================
+             PROBLEM 4 (EXERCISE 57): |3/4 - (3/2)x| < -7/2
+             ================================================================== -->
+        <section class="problem-block tufte-row" id="sec-p4">
+            <div class="main-col">
+                <h2 class="problem-heading">
+                    <span class="problem-num">4.</span>Checking for Special Cases (No Solution)
+                    <span class="exercise-tag">(Exercise 57)</span>
+                </h2>
+                <p>
+                    Solve the inequality, or type <code>no solution</code> if no value of $x$ works:
+                    $$\left|\frac{3}{4} - \frac{3}{2}x\right| &lt; -\frac{7}{2}.$$
+                </p>
+
+                <div class="step-row">
+                    <span class="step-label">Your Answer.</span> State the solution.
+                    <div class="inline-math-prompt">
+                        <span>Solution:</span>
+                        <input type="text" id="input-p4" class="math-inline-input" placeholder="e.g. x < -2" onkeydown="if(event.key==='Enter') checkProblem('p4')">
+                        <button type="button" id="btn-p4" class="tufte-action-btn" onclick="checkProblem('p4')">Check Answer</button>
+                        <button type="button" id="gu-p4" class="tufte-ghost-btn" onclick="revealProblem('p4')">Show Solution</button>
+                    </div>
+                </div>
+
+                <div class="next-problem-bar" id="next-bar-3">
+                    <span class="next-problem-hint">Problem 4 complete.</span>
+                    <button type="button" class="tufte-action-btn" onclick="goToProblem(4)">Next Problem &rarr;</button>
+                </div>
+
+                <button type="button" class="mobile-sidenote-toggle" onclick="toggleMobileNote('note-p4')">&#9656; Note 4: Watch the Right Side!</button>
+            </div>
+
+            <aside class="margin-col">
+                <div class="sidenote-card sidenote-collapsible" id="note-p4">
+                    <span class="sidenote-num">4</span>
+                    <span class="sidenote-title">Watch the right side!</span> Distance is always zero or positive ($|u| \ge 0$). Can an absolute value ever be less than a negative number like $-\frac{7}{2}$?
+                </div>
+                <div class="margin-feedback" id="fb-p4"></div>
+            </aside>
+        </section>
+
+        <!-- ==================================================================
+             PROBLEM 5 (EXERCISE 61, CHALLENGE): |4x/3| <= 2x + 5
+             ================================================================== -->
+        <section class="problem-block tufte-row" id="sec-p5">
+            <div class="main-col">
+                <h2 class="problem-heading">
+                    <span class="problem-num">5.</span>Challenge: Variable on the Right Side
+                    <span class="exercise-tag">(Exercise 61)</span>
+                </h2>
+                <p>
+                    Solve the inequality where the right-hand side contains $x$:
+                    $$\left|\frac{4x}{3}\right| \le 2x + 5.$$
+                </p>
+
+                <div class="step-row">
+                    <span class="step-label">Your Answer.</span> Enter the simplified inequality for $x$ (use <code>&gt;=</code> or <code>&lt;=</code>).
+                    <div class="inline-math-prompt">
+                        <span>Solution:</span>
+                        <input type="text" id="input-p5" class="math-inline-input" placeholder="e.g. x >= -4" onkeydown="if(event.key==='Enter') checkProblem('p5')">
+                        <button type="button" id="btn-p5" class="tufte-action-btn" onclick="checkProblem('p5')">Check Answer</button>
+                        <button type="button" id="gu-p5" class="tufte-ghost-btn" onclick="revealProblem('p5')">Show Solution</button>
+                    </div>
+                </div>
+
+                <div class="next-problem-bar" id="next-bar-4">
+                    <span class="next-problem-hint">Problem 5 complete.</span>
+                    <button type="button" class="tufte-action-btn" onclick="goToProblem(5)">Next Problem &rarr;</button>
+                </div>
+
+                <button type="button" class="mobile-sidenote-toggle" onclick="toggleMobileNote('note-p5')">&#9656; Note 5: Check Your Answers!</button>
+            </div>
+
+            <aside class="margin-col">
+                <div class="sidenote-card sidenote-collapsible" id="note-p5">
+                    <span class="sidenote-num">5</span>
+                    <span class="sidenote-title">Check your answers!</span> Because the right side $2x + 5$ contains a variable, a boundary value might make the right side negative. Plug your boundary into $2x + 5 \ge 0$ to make sure it works.
+                </div>
+                <div class="margin-feedback" id="fb-p5"></div>
+            </aside>
+        </section>
+
+        <!-- ==================================================================
+             PROBLEM 6 (EXERCISE 64, METEOROLOGY): |w - 50| <= 2
+             ================================================================== -->
+        <section class="problem-block tufte-row" id="sec-p6">
+            <div class="main-col">
+                <h2 class="problem-heading">
+                    <span class="problem-num">6.</span>Meteorology: Measuring Wind Speed
+                    <span class="exercise-tag">(Exercise 64)</span>
+                </h2>
+                <p>
+                    An instrument called an anemometer measures a wind speed of $50\text{ feet per second}$. The true wind speed $w$ is within $2\text{ feet per second}$ (inclusive) of the measured wind speed.
+                </p>
+
+                <div class="step-row">
+                    <span class="step-label">Part (a).</span> First, write the absolute-value inequality for the true wind speed $w$:
+                    <div class="inline-math-prompt">
+                        <span>Inequality:</span>
+                        <input type="text" id="input-p6a" class="math-inline-input" placeholder="e.g. |w - 40| <= 5" onkeydown="if(event.key==='Enter') checkProblem('p6a')">
+                        <button type="button" id="btn-p6a" class="tufte-action-btn" onclick="checkProblem('p6a')">Check Answer</button>
+                        <button type="button" id="gu-p6a" class="tufte-ghost-btn" onclick="revealProblem('p6a')">Show Solution</button>
+                    </div>
+                </div>
+
+                <div class="step-row">
+                    <span class="step-label">Part (b).</span> Second, find the range of possible true wind speeds:
+                    <div class="inline-math-prompt">
+                        <span>Range:</span>
+                        <input type="text" id="input-p6b" class="math-inline-input" placeholder="e.g. 35 <= w <= 45" onkeydown="if(event.key==='Enter') checkProblem('p6b')">
+                        <button type="button" id="btn-p6b" class="tufte-action-btn" onclick="checkProblem('p6b')">Check Answer</button>
+                        <button type="button" id="gu-p6b" class="tufte-ghost-btn" onclick="revealProblem('p6b')">Show Solution</button>
+                    </div>
+                </div>
+
+                <div class="next-problem-bar" id="next-bar-5">
+                    <span class="next-problem-hint">Problem 6 complete.</span>
+                    <button type="button" class="tufte-action-btn" onclick="goToProblem(6)">Next Problem &rarr;</button>
+                </div>
+
+                <button type="button" class="mobile-sidenote-toggle" onclick="toggleMobileNote('note-p6')">&#9656; Note 6: Setting Up Tolerance</button>
+            </div>
+
+            <aside class="margin-col">
+                <div class="sidenote-card sidenote-collapsible" id="note-p6">
+                    <span class="sidenote-num">6</span>
+                    <span class="sidenote-title">Setting up tolerance.</span> Use $|\text{actual} - \text{measured}| \le \text{margin of error}$. Here, the measured speed is $50\text{ ft/s}$ and the margin of error is $2\text{ ft/s}$.
+                </div>
+                <div class="margin-feedback" id="fb-p6a"></div>
+                <div class="margin-feedback" id="fb-p6b"></div>
+            </aside>
+        </section>
+
+        <!-- ==================================================================
+             PROBLEM 7 (EXERCISE 65, RECREATION): |p - 68| <= 3
+             ================================================================== -->
+        <section class="problem-block tufte-row" id="sec-p7">
+            <div class="main-col">
+                <h2 class="problem-heading">
+                    <span class="problem-num">7.</span>Recreation: Poll Margin of Error
+                    <span class="exercise-tag">(Exercise 65)</span>
+                </h2>
+                <p>
+                    A recent poll reported that $68\text{ percent}$ of moviegoers eat popcorn during the movie, with a margin of error of $3\%$. Let $p$ represent the true percent of moviegoers who eat popcorn.
+                </p>
+
+                <div class="step-row">
+                    <span class="step-label">Your Answer.</span> Enter the minimum and maximum possible percentages (separated by a comma):
+                    <div class="inline-math-prompt">
+                        <span>Bounds:</span>
+                        <input type="text" id="input-p7" class="math-inline-input" placeholder="e.g. 60, 75" onkeydown="if(event.key==='Enter') checkProblem('p7')">
+                        <button type="button" id="btn-p7" class="tufte-action-btn" onclick="checkProblem('p7')">Check Answer</button>
+                        <button type="button" id="gu-p7" class="tufte-ghost-btn" onclick="revealProblem('p7')">Show Solution</button>
+                    </div>
+                </div>
+
+                <div class="next-problem-bar" id="next-bar-6">
+                    <span class="next-problem-hint">All 7 problems completed.</span>
+                    <button type="button" class="tufte-action-btn" onclick="goToProblem(7)">Finish &amp; Generate Grade Token &rarr;</button>
+                </div>
+
+                <button type="button" class="mobile-sidenote-toggle" onclick="toggleMobileNote('note-p7')">&#9656; Note 7: Percent Tolerance</button>
+            </div>
+
+            <aside class="margin-col">
+                <div class="sidenote-card sidenote-collapsible" id="note-p7">
+                    <span class="sidenote-num">7</span>
+                    <span class="sidenote-title">Percent tolerance.</span> The reported poll result is $68\%$ and the margin of error is $3\%$, so $|p - 68| \le 3$. Solve for the lowest and highest possible percentages.
+                </div>
+                <div class="margin-feedback" id="fb-p7"></div>
+            </aside>
+        </section>
+
+        <!-- ==================================================================
+             INLINE GRADE VERIFICATION RECORD (SHOWN AFTER PROBLEM 7 OR VIA NAV)
+             ================================================================== -->
+        <section class="grade-record-section tufte-row" id="sec-grade-record">
+            <div class="main-col">
+                <div class="grade-record-header">
+                    <h2 class="grade-record-title">Assignment Summary &amp; Grade Token</h2>
+                </div>
+                <p style="font-size: 0.92rem; color: var(--ink-secondary);">
+                    Your grade token has been generated below using the name entered at the top of the worksheet. If you need to update your name, edit the header fields and click <strong>Refresh Grade Token</strong>.
+                </p>
+
+                <div class="token-output-panel visible" id="grade-token-panel">
+                    <div class="token-summary-line" id="token-summary-text"></div>
+                    <div class="token-code-box" id="token-string-box">MATH-GRADE::...</div>
+                    <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem;">
+                        <button type="button" class="tufte-action-btn" onclick="copyVerificationToken()">Copy Grade Token</button>
+                        <button type="button" class="tufte-ghost-btn" onclick="renderInlineGradeRecord()">Refresh Grade Token</button>
+                        <span class="copy-confirmation" id="copy-confirm-msg">Copied to clipboard!</span>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="margin-col">
+                <div class="sidenote-card">
+                    <span class="sidenote-title">How to Turn In.</span> Copy the entire <code>MATH-GRADE::...</code> code and paste it into your JupiterEd assignment submission box. Your score, time spent, and attempts on all 7 problems are automatically saved inside the code.
+                </div>
+            </aside>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    /* ==========================================================================
+       MODULE CURRICULUM DATA & STEP STATE
+       ========================================================================== */
+    const ASSIGNMENT_TITLE = "Section 1.8 Absolute-Value Equations and Inequalities";
+    const moduleStartTime = Date.now();
+    let currentViewIndex = 0; // 0..6 for problems 1..7, 7 for Grade Record
+    const sectionIds = ['sec-p1', 'sec-p2', 'sec-p3', 'sec-p4', 'sec-p5', 'sec-p6', 'sec-p7', 'sec-grade-record'];
+
+    function toggleReferenceDrawer() {
+        const drawer = document.getElementById('reference-drawer');
+        const btn = document.getElementById('ref-drawer-btn');
+        const isOpen = drawer.classList.toggle('open');
+        btn.innerHTML = isOpen
+            ? '&#9662; Hide Geometric Distance Quick Review'
+            : '&#9656; Quick Review: Absolute Value as Distance on a Number Line';
+        if (isOpen && window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([drawer]);
+        }
+    }
+
+    function goToProblem(idx) {
+        currentViewIndex = idx;
+
+        // Toggle active problem / record panel
+        sectionIds.forEach((secId, i) => {
+            const el = document.getElementById(secId);
+            if (!el) return;
+            if (secId === 'sec-grade-record') {
+                el.classList.toggle('active-record', i === idx);
+            } else {
+                el.classList.toggle('active-problem', i === idx);
+            }
+        });
+
+        // Update minimal Tufte index strip
+        for (let i = 0; i < sectionIds.length; i++) {
+            const navBtn = document.getElementById(`nav-idx-${i}`);
+            if (navBtn) {
+                navBtn.classList.toggle('active', i === idx);
+            }
+        }
+
+        const counterText = document.getElementById('problem-counter-text');
+        if (idx < 7) {
+            counterText.textContent = `Problem ${idx + 1} of 7`;
+        } else {
+            counterText.textContent = `Assignment Summary & Grade Token`;
+            renderInlineGradeRecord();
+        }
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            const activeEl = document.getElementById(sectionIds[idx]);
+            window.MathJax.typesetPromise([activeEl]);
+        }
+    }
+
+    function updateProblemCompletionUI(problemIndex) {
+        // Problem indices 0..6 correspond to p1..p7 (index 5 requires both p6a and p6b finished)
+        const stepGroups = [
+            ['p1'],
+            ['p2'],
+            ['p3'],
+            ['p4'],
+            ['p5'],
+            ['p6a', 'p6b'],
+            ['p7']
+        ];
+        const steps = stepGroups[problemIndex];
+        if (!steps) return;
+
+        const allDone = steps.every(id => stepState[id].status !== 'active');
+        const allCorrect = steps.every(id => stepState[id].status === 'correct');
+
+        if (allDone) {
+            const nextBar = document.getElementById(`next-bar-${problemIndex}`);
+            if (nextBar) nextBar.classList.add('visible');
+
+            const navBtn = document.getElementById(`nav-idx-${problemIndex}`);
+            if (navBtn) {
+                navBtn.classList.remove('solved', 'reviewed');
+                navBtn.classList.add(allCorrect ? 'solved' : 'reviewed');
+            }
+        }
+    }
+
+    // High Data-Ink SVG Number Line Renderer
+    function buildNumberLineSVG(cfg) {
+        // cfg: { min, max, ticks, segments: [{x1, x2, leftArrow, rightArrow}], points: [{x, open, label}] }
+        const w = 260, h = 48, pad = 22;
+        const span = cfg.max - cfg.min;
+        const mapX = val => pad + ((val - cfg.min) / span) * (w - 2 * pad);
+        const y = 24;
+
+        let svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" height="auto" role="img" aria-label="Number line graph">`;
+        // Base axis line
+        svg += `<line x1="${pad - 8}" y1="${y}" x2="${w - pad + 8}" y2="${y}" stroke="#777770" stroke-width="1"/>`;
+        // End arrowheads
+        svg += `<polyline points="${pad - 4},${y - 3} ${pad - 9},${y} ${pad - 4},${y + 3}" fill="none" stroke="#777770" stroke-width="1"/>`;
+        svg += `<polyline points="${w - pad + 4},${y - 3} ${w - pad + 9},${y} ${w - pad + 4},${y + 3}" fill="none" stroke="#777770" stroke-width="1"/>`;
+
+        // Tick marks & numerals
+        cfg.ticks.forEach(t => {
+            const tx = mapX(t.val);
+            svg += `<line x1="${tx}" y1="${y - 3.5}" x2="${tx}" y2="${y + 3.5}" stroke="#777770" stroke-width="0.9"/>`;
+            svg += `<text x="${tx}" y="${y + 15}" font-family="Palatino, Georgia, serif" font-size="9" fill="#444440" text-anchor="middle">${t.label}</text>`;
+        });
+
+        // Solution segments / rays in focal crimson
+        (cfg.segments || []).forEach(seg => {
+            const x1 = seg.leftArrow ? (pad - 8) : mapX(seg.x1);
+            const x2 = seg.rightArrow ? (w - pad + 8) : mapX(seg.x2);
+            svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#991b1b" stroke-width="2.4"/>`;
+            if (seg.leftArrow) {
+                svg += `<polyline points="${pad - 3},${y - 4} ${pad - 9},${y} ${pad - 3},${y + 4}" fill="none" stroke="#991b1b" stroke-width="1.8"/>`;
+            }
+            if (seg.rightArrow) {
+                svg += `<polyline points="${w - pad + 3},${y - 4} ${w - pad + 9},${y} ${w - pad + 3},${y + 4}" fill="none" stroke="#991b1b" stroke-width="1.8"/>`;
+            }
+        });
+
+        // Endpoint circles (solid vs open)
+        (cfg.points || []).forEach(pt => {
+            const px = mapX(pt.x);
+            const fill = pt.open ? '#fffff8' : '#991b1b';
+            svg += `<circle cx="${px}" cy="${y}" r="3.2" fill="${fill}" stroke="#991b1b" stroke-width="1.6"/>`;
+        });
+
+        svg += `</svg>`;
+        return svg;
+    }
+
+    // 3-Panel Small Multiples in Introductory Exposition
+    function renderIntroSmallMultiples() {
+        const container = document.getElementById('intro-small-multiples');
+        const panels = [
+            {
+                title: 'Case I: $|x - a| = c$',
+                caption: 'Two points at distance $c$',
+                svg: buildNumberLineSVG({
+                    min: -4, max: 4,
+                    ticks: [{ val: -2.5, label: 'a - c' }, { val: 0, label: 'a' }, { val: 2.5, label: 'a + c' }],
+                    points: [{ x: -2.5, open: false }, { x: 2.5, open: false }]
+                })
+            },
+            {
+                title: 'Case II: $|x - a| < c$',
+                caption: 'Bounded interval (AND)',
+                svg: buildNumberLineSVG({
+                    min: -4, max: 4,
+                    ticks: [{ val: -2.5, label: 'a - c' }, { val: 0, label: 'a' }, { val: 2.5, label: 'a + c' }],
+                    segments: [{ x1: -2.5, x2: 2.5 }],
+                    points: [{ x: -2.5, open: true }, { x: 2.5, open: true }]
+                })
+            },
+            {
+                title: 'Case III: $|x - a| > c$',
+                caption: 'Unbounded rays (OR)',
+                svg: buildNumberLineSVG({
+                    min: -4, max: 4,
+                    ticks: [{ val: -2.5, label: 'a - c' }, { val: 0, label: 'a' }, { val: 2.5, label: 'a + c' }],
+                    segments: [{ x2: -2.5, leftArrow: true }, { x1: 2.5, rightArrow: true }],
+                    points: [{ x: -2.5, open: true }, { x: 2.5, open: true }]
+                })
+            }
+        ];
+
+        container.innerHTML = panels.map(p => `
+            <div class="multiple-cell">
+                <div class="multiple-title">${p.title}</div>
+                ${p.svg}
+                <div class="multiple-caption">${p.caption}</div>
+            </div>
+        `).join('');
+    }
+
+    // 7 Textbook Exercises (Exercises 33, 38, 49, 57, 61, 64, 65)
+    const problemBank = {
+        p1: {
+            problemNum: 1,
+            label: "Ex33",
+            type: "pair",
+            accepted: ["-9/2,19/2", "-4.5,9.5"],
+            hint: "Set up two separate equations: $10 - 4x = 28$ and $10 - 4x = -28$.",
+            derivation: "$$10 - 4x = 28 \\implies -4x = 18 \\implies x = -\\frac{9}{2}$$ $$10 - 4x = -28 \\implies -4x = -38 \\implies x = \\frac{19}{2}$$",
+            numberLine: () => buildNumberLineSVG({
+                min: -7, max: 12,
+                ticks: [{ val: -4.5, label: '-9/2' }, { val: 0, label: '0' }, { val: 9.5, label: '19/2' }],
+                points: [{ x: -4.5, open: false }, { x: 9.5, open: false }]
+            })
+        },
+        p2: {
+            problemNum: 2,
+            label: "Ex38",
+            type: "pair",
+            accepted: ["-8/3,16/3"],
+            hint: "First add $9$ to both sides to isolate $|4 - 3x| = 12$, then solve $4 - 3x = 12$ and $4 - 3x = -12$.",
+            derivation: "$$|4 - 3x| = 12 \\implies 4 - 3x = 12 \\text{ or } 4 - 3x = -12$$ $$x = -\\frac{8}{3} \\quad \\text{or} \\quad x = \\frac{16}{3}$$",
+            numberLine: () => buildNumberLineSVG({
+                min: -5, max: 8,
+                ticks: [{ val: -8/3, label: '-8/3' }, { val: 0, label: '0' }, { val: 16/3, label: '16/3' }],
+                points: [{ x: -8/3, open: false }, { x: 16/3, open: false }]
+            })
+        },
+        p3: {
+            problemNum: 3,
+            label: "Ex49",
+            type: "expr",
+            accepted: ["-9<x<6", "x>-9andx<6", "x<6andx>-9"],
+            hint: "Rewrite as $-3 < \\frac{2x + 3}{5} < 3$, multiply all three parts by $5$, subtract $3$, and divide by $2$.",
+            derivation: "$$-3 < \\frac{2x + 3}{5} < 3 \\implies -15 < 2x + 3 < 15$$ $$-18 < 2x < 12 \\implies -9 < x < 6$$",
+            numberLine: () => buildNumberLineSVG({
+                min: -12, max: 9,
+                ticks: [{ val: -9, label: '-9' }, { val: 0, label: '0' }, { val: 6, label: '6' }],
+                segments: [{ x1: -9, x2: 6 }],
+                points: [{ x: -9, open: true }, { x: 6, open: true }]
+            })
+        },
+        p4: {
+            problemNum: 4,
+            label: "Ex57",
+            type: "expr",
+            accepted: ["nosolution", "none", "emptyset"],
+            hint: "Compare the non-negative sign of $\\left|\\frac{3}{4} - \\frac{3}{2}x\\right|$ with the negative bound $-\\frac{7}{2}$.",
+            derivation: "Since $\\left|\\frac{3}{4} - \\frac{3}{2}x\\right| \\ge 0$ for all real $x$, it can never be strictly less than $-\\frac{7}{2}$. Hence: <strong>no solution</strong>.",
+            numberLine: () => buildNumberLineSVG({
+                min: -4, max: 4,
+                ticks: [{ val: -2, label: '-2' }, { val: 0, label: '0' }, { val: 2, label: '2' }],
+                segments: [],
+                points: []
+            })
+        },
+        p5: {
+            problemNum: 5,
+            label: "Ex61",
+            type: "expr",
+            accepted: ["x>=-3/2", "x>=-1.5", "-3/2<=x", "-1.5<=x"],
+            hint: "Solve both $\\frac{4x}{3} \\le 2x + 5$ (giving $x \\ge -\\frac{15}{2}$) and $\\frac{4x}{3} \\ge -(2x + 5)$ (giving $x \\ge -\\frac{3}{2}$), then take their intersection.",
+            derivation: "$$\\frac{4x}{3} \\le 2x + 5 \\implies x \\ge -\\frac{15}{2} \\quad \\text{and} \\quad \\frac{4x}{3} \\ge -2x - 5 \\implies x \\ge -\\frac{3}{2}$$ Taking the intersection yields $x \\ge -\\frac{3}{2}$.",
+            numberLine: () => buildNumberLineSVG({
+                min: -4, max: 3,
+                ticks: [{ val: -1.5, label: '-3/2' }, { val: 0, label: '0' }, { val: 2, label: '2' }],
+                segments: [{ x1: -1.5, rightArrow: true }],
+                points: [{ x: -1.5, open: false }]
+            })
+        },
+        p6a: {
+            problemNum: 6,
+            label: "Ex64a",
+            type: "expr",
+            accepted: ["|w-50|<=2", "|50-w|<=2"],
+            hint: "Express the distance between $w$ and $50$ as $|w - 50|$ and bound it above by $2$ (inclusive).",
+            derivation: "$$|w - 50| \\le 2$$",
+            numberLine: null
+        },
+        p6b: {
+            problemNum: 6,
+            label: "Ex64b",
+            type: "expr",
+            accepted: ["48<=w<=52", "w>=48andw<=52", "w<=52andw>=48"],
+            hint: "Rewrite $|w - 50| \\le 2$ as $-2 \\le w - 50 \\le 2$ and add $50$ to all three parts.",
+            derivation: "$$-2 \\le w - 50 \\le 2 \\implies 48 \\le w \\le 52\\text{ ft/s}$$",
+            numberLine: () => buildNumberLineSVG({
+                min: 46, max: 54,
+                ticks: [{ val: 48, label: '48' }, { val: 50, label: '50' }, { val: 52, label: '52' }],
+                segments: [{ x1: 48, x2: 52 }],
+                points: [{ x: 48, open: false }, { x: 52, open: false }]
+            })
+        },
+        p7: {
+            problemNum: 7,
+            label: "Ex65",
+            type: "pair",
+            accepted: ["65,71"],
+            hint: "Solve $|p - 68| \\le 3$ to obtain $68 - 3 \\le p \\le 68 + 3$.",
+            derivation: "$$|p - 68| \\le 3 \\implies -3 \\le p - 68 \\le 3 \\implies 65\\% \\le p \\le 71\\%$$",
+            numberLine: () => buildNumberLineSVG({
+                min: 63, max: 73,
+                ticks: [{ val: 65, label: '65%' }, { val: 68, label: '68%' }, { val: 71, label: '71%' }],
+                segments: [{ x1: 65, x2: 71 }],
+                points: [{ x: 65, open: false }, { x: 71, open: false }]
+            })
+        }
+    };
+
+    const stepState = {};
+    Object.keys(problemBank).forEach(key => {
+        stepState[key] = {
+            attempts: [],
+            status: 'active', // 'active' | 'correct' | 'failed' | 'gave_up'
+            gaveUp: false
+        };
+    });
+
+    /* ==========================================================================
+       MATHEMATICAL EXPRESSION NORMALIZATION & VERIFICATION
+       ========================================================================== */
+    function canonicalizeExpr(raw, type) {
+        let s = raw.trim().toLowerCase();
+        if (!s) return '';
+
+        s = s.replace(/\\text\{[^}]*\}/g, '')
+             .replace(/\\le|≤/g, '<=')
+             .replace(/\\ge|≥/g, '>=')
+             .replace(/%|feetpersecond|ft\/s|fps/g, '')
+             .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '$1/$2')
+             .replace(/\s+/g, '');
+
+        if (s.includes('nosolution') || s === 'none' || s === 'emptyset') return 'nosolution';
+
+        if (type === 'pair') {
+            // Allow "x = -9/2 or x = 19/2" or "-9/2, 19/2"
+            const delimiter = s.includes(',') ? ',' : (s.includes('or') ? 'or' : null);
+            if (!delimiter) return s;
+            const parts = s.split(delimiter)
+                .map(part => part.replace(/^[a-z]=/, '').trim())
+                .sort();
+            return parts.join(',');
+        }
+
+        return s;
+    }
+
+    function checkProblem(stepId) {
+        const state = stepState[stepId];
+        const meta = problemBank[stepId];
+        if (state.status !== 'active') return;
+
+        const inputEl = document.getElementById(`input-${stepId}`);
+        const rawVal = inputEl.value.trim();
+        if (!rawVal) return;
+
+        const userCanon = canonicalizeExpr(rawVal, meta.type);
+        const isCorrect = meta.accepted.some(ans => canonicalizeExpr(ans, meta.type) === userCanon);
+
+        state.attempts.push(rawVal);
+
+        if (isCorrect) {
+            state.status = 'correct';
+            lockControls(stepId);
+            const praiseLead = state.attempts.length === 1
+                ? 'Correct! Nice work.'
+                : 'Correct on your second try!';
+            renderFeedback(stepId, 'status-correct',
+                praiseLead,
+                `Your answer <code>${escapeHtml(rawVal)}</code> is right.`,
+                meta.derivation,
+                meta.numberLine ? meta.numberLine() : null
+            );
+            updateProblemCompletionUI(meta.problemNum - 1);
+        } else if (state.attempts.length === 1) {
+            renderFeedback(stepId, 'status-retry',
+                'Not quite—check the margin note and try once more.',
+                meta.hint,
+                null,
+                null
+            );
+        } else {
+            state.status = 'failed';
+            lockControls(stepId);
+            renderFeedback(stepId, 'status-revealed',
+                'Out of attempts—review the solution below.',
+                `Your tries: <code>${state.attempts.map(escapeHtml).join(', ')}</code>.`,
+                meta.derivation,
+                meta.numberLine ? meta.numberLine() : null
+            );
+            updateProblemCompletionUI(meta.problemNum - 1);
+        }
+    }
+
+    function revealProblem(stepId) {
+        const state = stepState[stepId];
+        const meta = problemBank[stepId];
+        if (state.status !== 'active') return;
+
+        state.gaveUp = true;
+        state.status = 'gave_up';
+        lockControls(stepId);
+        renderFeedback(stepId, 'status-revealed',
+            'Solution shown.',
+            'Review the step-by-step work and number line below.',
+            meta.derivation,
+            meta.numberLine ? meta.numberLine() : null
+        );
+        updateProblemCompletionUI(meta.problemNum - 1);
+    }
+
+    function lockControls(stepId) {
+        document.getElementById(`input-${stepId}`).disabled = true;
+        document.getElementById(`btn-${stepId}`).disabled = true;
+        document.getElementById(`gu-${stepId}`).disabled = true;
+    }
+
+    function renderFeedback(stepId, cssClass, leadText, bodyHtml, derivationHtml, svgHtml) {
+        const fbEl = document.getElementById(`fb-${stepId}`);
+        fbEl.className = `margin-feedback visible ${cssClass}`;
+        fbEl.innerHTML = `
+            <div class="feedback-lead">${leadText}</div>
+            <div>${bodyHtml}</div>
+            ${derivationHtml ? `<div class="worked-derivation">${derivationHtml}</div>` : ''}
+            ${svgHtml ? `<div class="solution-numberline">${svgHtml}</div>` : ''}
+        `;
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([fbEl]);
+        }
+    }
+
+    function toggleMobileNote(noteId) {
+        const el = document.getElementById(noteId);
+        if (el) el.classList.toggle('open');
+    }
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /* ==========================================================================
+       INLINE GRADE VERIFICATION RECORD (SCORE OUT OF 7 PROBLEMS)
+       ========================================================================== */
+    function renderInlineGradeRecord() {
+        const firstName = document.getElementById('student-first-name').value.trim() || 'Anonymous';
+        const lastName = document.getElementById('student-last-name').value.trim() || 'Student';
+
+        // Calculate problem-level score out of 7 (Problem 6 requires both 6a and 6b correct)
+        const p1Ok = stepState.p1.status === 'correct';
+        const p2Ok = stepState.p2.status === 'correct';
+        const p3Ok = stepState.p3.status === 'correct';
+        const p4Ok = stepState.p4.status === 'correct';
+        const p5Ok = stepState.p5.status === 'correct';
+        const p6Ok = stepState.p6a.status === 'correct' && stepState.p6b.status === 'correct';
+        const p7Ok = stepState.p7.status === 'correct';
+
+        const solvedProblems = [p1Ok, p2Ok, p3Ok, p4Ok, p5Ok, p6Ok, p7Ok].filter(Boolean).length;
+        const durationSec = Math.max(1, Math.round((Date.now() - moduleStartTime) / 1000));
+
+        const keys = Object.keys(problemBank);
+        const breakdown = keys.map(k => {
+            const st = stepState[k];
+            const label = problemBank[k].label;
+            const statusChar = st.status === 'correct' ? 'S' : (st.gaveUp ? 'G' : 'F');
+            const attCount = st.attempts.length;
+            const ansList = attCount > 0
+                ? st.attempts.map(a => a.replace(/[|;:]/g, '_')).join(',')
+                : 'none';
+            return `${label}:${statusChar}:att=${attCount}:ans=[${ansList}]:gu=${st.gaveUp ? 1 : 0}`;
+        });
+
+        // Format: Section 1.8 Absolute-Value Equations and Inequalities|LastName, FirstName|Score/7|DurationSec|Breakdown
+        const payload = `${ASSIGNMENT_TITLE}|${lastName}, ${firstName}|${solvedProblems}/7|${durationSec}s|${breakdown.join(';')}`;
+        const encodedToken = `MATH-GRADE::${btoa(payload)}`;
+
+        document.getElementById('token-summary-text').innerHTML =
+            `<strong>Student:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)} &middot; <strong>Score:</strong> ${solvedProblems} / 7 (${Math.round((solvedProblems / 7) * 100)}%) &middot; <strong>Time:</strong> ${durationSec}s`;
+        document.getElementById('token-string-box').textContent = encodedToken;
+        document.getElementById('grade-token-panel').classList.add('visible');
+    }
+
+    function copyVerificationToken() {
+        const tokenStr = document.getElementById('token-string-box').textContent;
+        const tempArea = document.createElement('textarea');
+        tempArea.value = tokenStr;
+        document.body.appendChild(tempArea);
+        tempArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempArea);
+
+        const confirmEl = document.getElementById('copy-confirm-msg');
+        confirmEl.classList.add('show');
+        setTimeout(() => confirmEl.classList.remove('show'), 2200);
+    }
+
+    window.onload = function () {
+        renderIntroSmallMultiples();
+        goToProblem(0);
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise();
+        }
+    };
+</script>
+
+</body>
+</html>
